@@ -1,42 +1,23 @@
 <template>
   <div id="app" class="container">
-    <div class="row">        
-        <div class="col-1">Rank</div>         
-        <div class="col-4">Name</div> 
-        <div class="col-3">Price USD</div> 
-        <div class="col-3">Market capitalization</div> 
-    </div>
-    <ul v-for="item in currentData" class="list-group">      
-      <li class="list-group-item">
-        <app-coin :coin='item'></app-coin>
-      </li>
-    </ul>
+    <div class="row">
+        <div class="col">
+            <router-link :to='{ name: "home" }'>Home</router-link>
+            <router-link :to='{ name: "calculator" }'>Calculator</router-link>
+        </div>
+    </div>  
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Coin from './components/Coin.vue'
-export default {
-  name: 'app',
-  data () {
-    return {
-      currentData: {}
-    }
-  },
+import CoinsList from './components/CoinsList.vue'
+export default {  
   components: {
-    'app-coin': Coin
-  },
-  mounted() {
-    fetch('https://api.coinmarketcap.com/v1/ticker/?limit=10')
-        .then(res => {
-          return res.json()
-        })
-        .then(res => {
-          this.currentData = res;          
-        });
-
-        
-  }
+    'app-coin': Coin,
+    'app-coins-list': CoinsList
+  }  
 }
 </script>
 
