@@ -10,32 +10,33 @@
       <li class="list-group-item">
         <app-coin :coin='item'></app-coin>
       </li>
-    </ul>
+    </ul>    
   </div>
 </template>
 
 <script>
 import Coin from './Coin.vue'
+import { EventBus } from '../main.js'
+
 export default {
   name: 'app',
   data () {
     return {
-      currentData: {}
+      currentData: []
     }
   },
   components: {
     'app-coin': Coin
   },
-  mounted() {
+  created() {
     fetch('https://api.coinmarketcap.com/v1/ticker/?limit=20')
         .then(res => {
           return res.json()
         })
         .then(res => {
           this.currentData = res;          
-        });
-
-        
+          EventBus.setData(this.currentData);
+        });    
   }
 }
 </script>

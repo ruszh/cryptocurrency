@@ -6,6 +6,22 @@ import Calculator from './components/Calculator.vue'
 
 Vue.use(VueRouter);
 
+export const EventBus = new Vue({
+  data() {
+    return {
+      coinsData: []
+    }
+  },
+  methods: {
+    setData(data) {
+      this.coinsData = data;
+    },
+    getData() {
+      return this.coinsData;
+    }
+  }
+});
+
 const router = new VueRouter({
   routes: [
     { path: '/', name: 'home', component: CoinsList },

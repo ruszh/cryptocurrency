@@ -2,8 +2,12 @@
   <div id="app" class="container">
     <div class="row">
         <div class="col">
-            <router-link :to='{ name: "home" }'>Home</router-link>
-            <router-link :to='{ name: "calculator" }'>Calculator</router-link>
+            <button type="button" class="btn btn-light">
+              <router-link :to='{ name: "home" }'>Home</router-link>
+            </button>
+            <button type="button" class="btn btn-light">
+              <router-link :to='{ name: "calculator" }'>Calculator</router-link>
+            </button>
         </div>
     </div>  
     <router-view></router-view>
