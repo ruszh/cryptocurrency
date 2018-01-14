@@ -18,8 +18,8 @@
         <!-- <div class="row">
             selected coin: {{ selectedCoin }}
         </div> -->
-        <div class="row d-flex justify-content-center" v-if='counted'>
-            {{ number }} {{ selectedCoin.symbol }} cost {{ price }}$
+        <div class="row d-flex justify-content-center display-4" v-if='counted'>
+            {{ number }} {{ selectedCoin.symbol }} = {{ price }}$
         </div>  
     </div>
     

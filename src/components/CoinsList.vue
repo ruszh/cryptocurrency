@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <select @change="selectNumberOfCoins()" class="custom-select col-2" id="select1">                
+      <select @change="selectNumberOfCoins()" class="custom-select col-1" id="select1">                
           <option  value="10">10</option>
           <option  value="20">20</option>
           <option  value="50">50</option>
@@ -15,7 +15,7 @@
         <div class="col-3">Market capitalization</div> 
     </div>
     <ul class="list-group">      
-      <li v-for="item in currentData" class="list-group-item">
+      <li v-for="item in currentData" class="list-group-item border-left-0 border-right-0">
         <app-coin :coin='item'></app-coin>
       </li>
     </ul>    
