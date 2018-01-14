@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <div class="row">
-        <div class="col">
+        <div class="col text-center">
             <button type="button" class="btn btn-light">
               <router-link :to='{ name: "home" }'>Home</router-link>
             </button>
