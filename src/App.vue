@@ -8,6 +8,9 @@
             <button type="button" class="btn btn-light">
               <router-link :to='{ name: "calculator" }'>Calculator</router-link>
             </button>
+            <button type="button" class="btn btn-light">
+              <router-link :to='{ name: "list" }'>New list of coins</router-link>
+            </button>
         </div>
     </div>  
     <router-view></router-view>
@@ -17,10 +20,13 @@
 <script>
 import Coin from './components/Coin.vue'
 import CoinsList from './components/CoinsList.vue'
+import NewList from './components/NewList.vue'
+
 export default {  
   components: {
     'app-coin': Coin,
-    'app-coins-list': CoinsList
+    'app-coins-list': CoinsList,
+    'app-new-list': NewList
   }  
 }
 </script>

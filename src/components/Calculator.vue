@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1 class='text-center'>Crypto-calculator</h1>
+        <h1 class='text-center'>Cryptocurrency Calculator</h1>
         <div class="input-group d-flex justify-content-center">
             <div class='row'>
                 <select @change="selectCoin()" class="custom-select" id="inputGroupSelect04">                
@@ -37,8 +37,7 @@ export default {
           selectedCoin: {},
           number: '',
           price: '',
-          counted: false
-          
+          counted: false          
       }
   },  
   mounted() {
