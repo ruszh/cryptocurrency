@@ -1,8 +1,5 @@
 <template>
-    <div class='container'>
-        <div class='row'>
-            <button class='btn col-2' @click='connect'>Connect</button>
-        </div>
+    <div class='container'>        
         <div class='row'>            
             <ul class="list-group col">      
                 <li v-for="(coin, index) in coinsStorage" class="list-group-item border-left-0 border-right-0">
@@ -21,34 +18,30 @@
 
 <script>
     import socketClient from 'socket.io-client'
+
     export default {
         data() {
             return {
                 coinsStorage: []
             }
-        },
-        methods: {
-            connect() {
+        },        
+        created() {
+                fetch('http://coincap.io/front')
+                    .then(res => {
+                        return res.json()
+                    })
+                    .then(response => {                    
+                        this.coinsStorage = response;
+                    })
+
                 const socket = socketClient.connect('https://coincap.io');
 
-                socket.on('trades', function(tradeMsg) {
-                    console.log(tradeMsg)  
-                    console.log(self)
-                    this.coinsStorage.map(function(coin) {
-                        if(coin.short === tradeMsg.coin) return tradeMsg.message.msg
+                socket.on('trades', function(tradeMsg) {                    
+                    this.coinsStorage = this.coinsStorage.map(function(coin) {
+                        if(coin.short === tradeMsg.coin) return tradeMsg.msg
                         return coin;
-                    })
+                    })                    
                 }.bind(this))
-            }
-        },
-        created() {
-            fetch('http://coincap.io/front')
-                .then(res => {
-                    return res.json()
-                })
-                .then(response => {
-                    this.coinsStorage = response;
-                })
         }
     }
 </script>
