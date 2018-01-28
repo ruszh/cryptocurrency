@@ -1,17 +1,11 @@
 <template>
   <div id="app" class="container">
-    <div class="row">
-        <div class="col text-center">
-            <button type="button" class="btn btn-light">
-              <router-link :to='{ name: "home" }'>Home</router-link>
-            </button>
-            <button type="button" class="btn btn-light">
-              <router-link :to='{ name: "calculator" }'>Calculator</router-link>
-            </button>
-            <button type="button" class="btn btn-light">
-              <router-link :to='{ name: "list" }'>New list of coins</router-link>
-            </button>
-        </div>
+    <div class="row">        
+        <nav class="nav m-auto nav-pills">
+          <router-link class='nav-link link' :to='{ name: "home" } ' exact>Home</router-link> 
+          <router-link class='nav-link link' :to='{ name: "calculator" }'>Calculator</router-link>
+          <router-link class='nav-link link' :to='{ name: "list" }'>New list of coins</router-link>
+        </nav>
     </div>  
     <router-view></router-view>
   </div>
@@ -37,7 +31,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  
   color: #2c3e50;
-  margin-top: 60px;
+}
+.active-link {
+  background-color: #f2f2f2;
+  color:  #014185
 }
 
 </style>

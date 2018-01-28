@@ -28,7 +28,8 @@ const router = new VueRouter({
     { path: '/', name: 'home', component: CoinsList },
     { path: '/calc', name: 'calculator', component: Calculator },
     { path: '/list', name: 'list', component: NewList }
-  ]
+  ],
+  linkActiveClass: 'active-link'
 })
 
 new Vue({

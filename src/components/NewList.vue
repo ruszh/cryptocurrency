@@ -1,20 +1,26 @@
 <template>
-    <div class='container'>        
-        <div class='row'>            
-            <ul class="list-group col">      
-                <li v-for="(coin, index) in coinsStorage" class="list-group-item border-left-0 border-right-0">
-                    <div class="row">        
-                        <div class="col-1">{{index + 1}}</div> 
-                        <div class="col-1">{{coin.short}}</div> 
-                        <div class="col">{{coin.long}}</div> 
-                        <div class="col price">{{Math.round(coin.price * 10000) / 10000 }}$</div>
-                        <div class="col" :class="[ {up: coin.cap24hrChange > 0}, {down: coin.cap24hrChange < 0}]">{{coin.cap24hrChange}}%</div>                         
-                        <div class="col marketcap">{{Math.round(coin.mktcap).toLocaleString('ru')}}$</div> 
-                    </div>
-                </li>
-            </ul>  
-        </div>
-    </div>  
+                <table class="table table-striped pt-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Change(24h)</th>
+                            <th scope="col">Market Cap</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(coin, index) in coinsStorage">
+                            <th scope="row">{{ index + 1 }}</th>
+                            <td>{{ coin.short }}</td>
+                            <td>{{ coin.long }}</td>
+                            <td class='price'>{{ Math.round(coin.price * 10000) / 10000 }}$</td>
+                            <td :class="[ {up: coin.cap24hrChange > 0}, {down: coin.cap24hrChange < 0}]">{{ coin.cap24hrChange }}%</td> 
+                            <td class="marketcap">{{Math.round(coin.mktcap).toLocaleString('ru')}}$</td>
+                        </tr>                        
+                    </tbody>
+        </table>        
 </template>
 
 <script>
@@ -71,11 +77,12 @@
     }
     .down {
         color: red
-    }
-    .price {
-        color: rgb(185, 142, 0)
-    }
+    }    
     .marketcap {
         color: royalblue
     } 
+    .price {
+        width: 150px;
+
+    }
 </style>
