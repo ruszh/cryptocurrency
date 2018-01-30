@@ -3,8 +3,7 @@
     <div class="row">        
         <nav class="nav m-auto nav-pills">
           <router-link class='nav-link link' :to='{ name: "home" } ' exact>Home</router-link> 
-          <router-link class='nav-link link' :to='{ name: "calculator" }'>Calculator</router-link>
-          <router-link class='nav-link link' :to='{ name: "list" }'>New list of coins</router-link>
+          <router-link class='nav-link link' :to='{ name: "calculator" }'>Calculator</router-link>          
         </nav>
     </div>  
     <router-view></router-view>
@@ -14,13 +13,11 @@
 <script>
 import Coin from './components/Coin.vue'
 import CoinsList from './components/CoinsList.vue'
-import NewList from './components/NewList.vue'
 
 export default {  
   components: {
     'app-coin': Coin,
-    'app-coins-list': CoinsList,
-    'app-new-list': NewList
+    'app-coins-list': CoinsList    
   }  
 }
 </script>

@@ -4,7 +4,7 @@
         <div class="input-group d-flex justify-content-center">
             <div class='row'>
                 <select @change="selectCoin()" class="custom-select" id="inputGroupSelect04">                
-                    <option v-for='coin in coinsObject' :value="coin.rank">{{ coin.symbol }}</option>
+                    <option v-for='(coin, index) in coinsObject' :value="index">{{ coin.short }}</option>
                 </select>               
                 <div class="input-group col">         
                     <input v-model='number' @change='count' type="number" class="form-control col" aria-label="small" aria-describedby="inputGroup-sizing-sm">
@@ -13,16 +13,13 @@
                
         </div>  
         <div class="row d-flex justify-content-center display-4" v-if='counted'>
-            {{ number }} {{ selectedCoin.symbol }} = {{ price }}$
+            {{ number }} {{ selectedCoin.short }} = {{ price }}$
         </div>  
     </div>
     
 </template>
 
 <script>
-import { EventBus } from '../main.js'
-
-
 
 export default {
   data() {
@@ -34,9 +31,16 @@ export default {
           counted: false          
       }
   },  
-  mounted() {
-      this.coinsObject = EventBus.getData(); 
-      this.selectedCoin = this.coinsObject[0];      
+  created() {
+    fetch('http://coincap.io/front')
+                    .then(res => {
+                        return res.json()
+                    })
+                    .then(response => {                    
+                        this.coinsObject = response;
+                    });
+
+    this.selectedCoin = this.coinsObject[0];   
   },
   methods: {
       selectCoin() {
@@ -44,7 +48,7 @@ export default {
           this.selectedCoin = this.coinsObject[selectEl.selectedIndex];
       },
       count() {
-          const coinPrice = this.selectedCoin.price_usd;
+          const coinPrice = this.selectedCoin.price;
           this.price = this.number * coinPrice;
           this.counted = true;
       }

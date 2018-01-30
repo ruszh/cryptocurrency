@@ -1,67 +1,79 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <select @change="selectNumberOfCoins()" class="custom-select col-1" id="select1">                
-          <option  value="10">10</option>
-          <option  value="20">20</option>
-          <option  value="50">50</option>
-          <option  value="100">100</option>
-      </select>
-    </div>      
-    <div class="row">        
-        <div class="col-1">Rank</div>         
-        <div class="col-4">Name</div> 
-        <div class="col-3">Price USD</div> 
-        <div class="col-3">Market capitalization</div> 
-    </div>
-    <ul class="list-group">      
-      <li v-for="item in currentData" class="list-group-item border-left-0 border-right-0">
-        <app-coin :coin='item'></app-coin>
-      </li>
-    </ul>    
-  </div>
+                <table class="table table-striped pt-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rank</th>                            
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Change(24h)</th>
+                            <th scope='col'>Available Supply</th>
+                            <th scope="col">Market Cap</th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        <app-coin  v-for="(coin, index) in coinsStorage" :coin='coin' :index='index'></app-coin>                        
+                    </tbody>
+        </table>        
 </template>
 
 <script>
-import Coin from './Coin.vue'
-import { EventBus } from '../main.js'
+    import socketClient from 'socket.io-client'
+    import Coin from './Coin.vue'
 
-export default {
-  name: 'app',
-  data () {
-    return {
-      currentData: [],
-      numberOfCoins: 10
-    }
-  },
-  components: {
-    'app-coin': Coin
-  },
-  created() {
-      this.getData()
-  },
-  methods: {
-    selectNumberOfCoins() {
-        const selectEl = document.querySelector('select'),
-              selectedIndex = selectEl.selectedIndex;
+    export default {
+        data() {
+            return {
+                coinsStorage: [],
+                numberOfCoins: 20
+            }
+        }, 
+        components: {
+            'app-coin': Coin
+        },
+        methods: {
+            getData() {
+                fetch('http://coincap.io/front')
+                    .then(res => {
+                        return res.json()
+                    })
+                    .then(response => {                    
+                        this.coinsStorage = response.slice(0, this.numberOfCoins);
+                    })
 
-        this.numberOfCoins = selectEl[selectedIndex].value;
-        this.getData()
-    },
-    getData() {
-      fetch(`https://api.coinmarketcap.com/v1/ticker/?limit=${this.numberOfCoins}`)
-        .then(res => {
-          return res.json()
-        })
-        .then(res => {
-          this.currentData = res;          
-          EventBus.setData(this.currentData);
-        });  
+            }
+        },    
+        created() {
+                
+                if(document.documentElement.clientHeight > 900) {
+                    this.numberOfCoins = 50;
+                    this.getData();
+                } else this.getData();
+
+                const socket = socketClient.connect('https://coincap.io');
+
+                socket.on('trades', function(tradeMsg) {                    
+                    this.coinsStorage = this.coinsStorage.map(function(coin) {
+                        if(coin.short === tradeMsg.coin) return tradeMsg.msg
+                        return coin;
+                    })                    
+                }.bind(this));
+
+                window.addEventListener('scroll', function() {
+                    if(window.pageYOffset > 1500) {
+                        this.numberOfCoins = 100;
+                        this.getData()
+                    }
+                    if(window.pageYOffset > 3500) {
+                        this.numberOfCoins = 200;
+                        this.getData()
+                    }
+                    console.log(window.pageYOffset)
+                    
+                }.bind(this))
+        }
     }
-  }
-}
 </script>
 
 <style>
-
+    
 </style>
