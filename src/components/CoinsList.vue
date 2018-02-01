@@ -1,19 +1,20 @@
 <template>
-                <table class="table table-striped pt-2">
-                    <thead>
-                        <tr>
-                            <th scope="col">Rank</th>                            
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Change(24h)</th>
-                            <th scope='col'>Available Supply</th>
-                            <th scope="col">Market Cap</th>
-                        </tr>
-                    </thead>
-                    <tbody>                        
-                        <app-coin  v-for="(coin, index) in coinsStorage" :coin='coin' :index='index'></app-coin>                        
-                    </tbody>
-        </table>        
+    <table class="table table-striped pt-2">
+        <thead>
+            <tr>
+                <th scope="col">Rank</th>                            
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Change(24h)</th>
+                <th scope='col'>Available Supply</th>
+                <th scope="col">Market Cap</th>
+                <th scope='col'>Select</th>
+            </tr>
+        </thead>
+        <tbody>                        
+            <app-coin @selected='selectedCoin' v-for="(coin, index) in coinsStorage" :coin='coin' :index='index'></app-coin>                        
+        </tbody>        
+    </table>        
 </template>
 
 <script>
@@ -24,7 +25,8 @@
         data() {
             return {
                 coinsStorage: [],
-                numberOfCoins: 20
+                numberOfCoins: 200,
+                selectedCoins: []
             }
         }, 
         components: {
@@ -40,6 +42,10 @@
                         this.coinsStorage = response.slice(0, this.numberOfCoins);
                     })
 
+            },
+            selectedCoin(coinObj) {
+                this.selectedCoins.push(coinObj);
+                console.log(this.selectedCoins)
             }
         },    
         created() {
@@ -67,7 +73,7 @@
                         this.numberOfCoins = 200;
                         this.getData()
                     }
-                    console.log(window.pageYOffset)
+                    // console.log(window.pageYOffset)
                     
                 }.bind(this))
         }

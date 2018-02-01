@@ -7,6 +7,7 @@
         </nav>
     </div>  
     <router-view></router-view>
+    <button v-if='visible' class='button-up' @click='scrollUp'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
   </div>
 </template>
 
@@ -18,7 +19,24 @@ export default {
   components: {
     'app-coin': Coin,
     'app-coins-list': CoinsList    
-  }  
+  },
+  data() {
+    return {
+      visible: false
+    }
+  },
+  methods: {
+    scrollUp() {
+      window.scrollTo(0, 0);
+    }
+  },
+  created() {
+    window.addEventListener('scroll', ()=> {
+      if(window.window.pageYOffset > 1000) this.visible = true;
+      else this.visible = false;
+    })
+  }
+
 }
 </script>
 
@@ -33,5 +51,13 @@ export default {
   background-color: #f2f2f2;
   color:  #014185
 }
-
+.button-up {
+  position: fixed;
+  top: 50%;
+  left: 10%;
+  border: none;
+  background: transparent;
+  outline: 0 !important;
+  cursor: pointer;
+}
 </style>
