@@ -7,7 +7,8 @@
         </nav>
     </div>  
     <router-view></router-view>
-    <button v-if='visible' class='button-up' @click='scrollUp'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
+    <button v-if='visibleUp' class='button-up' @click='scrollUp'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
+    <button v-if='visibleDown' class='button-down' @click='scrollDown'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
   </div>
 </template>
 
@@ -22,18 +23,32 @@ export default {
   },
   data() {
     return {
-      visible: false
+      visibleUp: false,
+      visibleDown: false,
+      scrollY: 0
     }
   },
   methods: {
     scrollUp() {
+      this.scrollY = window.pageYOffset;
       window.scrollTo(0, 0);
+      this.visibleUp = false;
+      this.visibleDown = true;
+    },
+    scrollDown() {
+      window.scrollTo(0, this.scrollY);
+      this.visibleDown = false;
+      this.visibleUp = true;
+      
     }
   },
   created() {
-    window.addEventListener('scroll', ()=> {
-      if(window.window.pageYOffset > 1000) this.visible = true;
-      else this.visible = false;
+    window.addEventListener('scroll', ()=> {      
+      if(window.pageYOffset > 1000) {
+        if(this.visibleDown) this.visibleDown = false;
+         this.visibleUp = true;
+      }      
+      else this.visibleUp = false;
     })
   }
 
@@ -54,10 +69,20 @@ export default {
 .button-up {
   position: fixed;
   top: 50%;
-  left: 10%;
+  left: 10px;
   border: none;
   background: transparent;
   outline: 0 !important;
   cursor: pointer;
+}
+.button-down {
+  position: fixed;
+  top: 50%;
+  left: 10px;
+  border: none;
+  background: transparent;
+  outline: 0 !important;
+  cursor: pointer;
+  transform: rotate(180deg);
 }
 </style>

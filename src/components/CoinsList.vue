@@ -1,20 +1,21 @@
 <template>
-    <table class="table table-striped pt-2">
-        <thead>
-            <tr>
-                <th scope="col">Rank</th>                            
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Change(24h)</th>
-                <th scope='col'>Available Supply</th>
-                <th scope="col">Market Cap</th>
-                <th scope='col'>Select</th>
-            </tr>
-        </thead>
-        <tbody>                        
-            <app-coin @selected='selectedCoin' v-for="(coin, index) in coinsStorage" :coin='coin' :index='index'></app-coin>                        
-        </tbody>        
-    </table>        
+    <div class="container">
+        <table class="table table-striped pt-2">
+            <thead>
+                <tr>
+                    <th scope="col">Rank</th>                            
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Change(24h)</th>
+                    <th scope='col'>Available Supply</th>
+                    <th scope="col">Market Cap</th>                    
+                </tr>
+            </thead>
+            <tbody>                
+                <app-coin v-for="(coin, index) in coinsStorage" :coin='coin' :index='index'></app-coin>                        
+            </tbody>        
+        </table> 
+    </div>           
 </template>
 
 <script>
@@ -25,8 +26,7 @@
         data() {
             return {
                 coinsStorage: [],
-                numberOfCoins: 200,
-                selectedCoins: []
+                numberOfCoins: 200
             }
         }, 
         components: {
@@ -42,10 +42,6 @@
                         this.coinsStorage = response.slice(0, this.numberOfCoins);
                     })
 
-            },
-            selectedCoin(coinObj) {
-                this.selectedCoins.push(coinObj);
-                console.log(this.selectedCoins)
             }
         },    
         created() {
