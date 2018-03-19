@@ -11,8 +11,7 @@
 
 <script>
 export default {    
-  props: ["coin", "index"]
-  
+  props: ["coin", "index"]  
 }
 </script>
 

@@ -7,8 +7,8 @@
         </nav>
     </div>  
     <router-view></router-view>
-    <button v-if='visibleUp' class='button-up' @click='scrollUp'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
-    <button v-if='visibleDown' class='button-down' @click='scrollDown'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
+    <button v-if='visibleUp' class='scroll-button' @click='scrollUp'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
+    <button v-if='visibleDown' class='scroll-button button-down' @click='scrollDown'><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Up_Arrow.png" height="20px"></button>
   </div>
 </template>
 
@@ -66,23 +66,16 @@ export default {
   background-color: #f2f2f2;
   color:  #014185
 }
-.button-up {
-  position: fixed;
-  top: 50%;
-  left: 10px;
-  border: none;
-  background: transparent;
-  outline: 0 !important;
-  cursor: pointer;
+.scroll-button {
+    position: fixed;
+    top: 50%;
+    left: 10px;
+    border: none;
+    background: transparent;
+    outline: 0 !important;
+    cursor: pointer;
 }
-.button-down {
-  position: fixed;
-  top: 50%;
-  left: 10px;
-  border: none;
-  background: transparent;
-  outline: 0 !important;
-  cursor: pointer;
+.button-down { 
   transform: rotate(180deg);
 }
 </style>
